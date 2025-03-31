@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations;
 using DG.Tweening;
+using UnityEngine.Events;
 
 public class PlayerControler : MonoBehaviour
 {
@@ -20,9 +21,18 @@ public class PlayerControler : MonoBehaviour
     [SerializeField] private float noiseAmplitude = 0.05f;
     [SerializeField] private float noiseSpeed = 0.5f;
 
+    [Header("EVENT")]
+  
+    public UnityEvent<float> OnInitSlider;
+    public UnityEvent<float> OnBlueSerumCollision;
+
     Vector3 targetPosition;
+    private float timerGamplay = 0f;
     bool isMoving = false;
-    float serumBlue = 100f;
+    private float serumBlue = 80f;
+    private float serumGreen = 100f;
+    private float serumUYellow = 100f;
+    private float serumUPurple = 100f;
 
     private void Start()
     {
@@ -30,6 +40,9 @@ public class PlayerControler : MonoBehaviour
         aimTarget.position = targetPosition;
         aimTarget.position = Vector3.forward* aimeRange;
         aimTarget.parent = null;
+
+        OnInitSlider.Invoke(serumBlue);
+        timerGamplay = 0f;
     }
 
     private void Update()
@@ -41,6 +54,8 @@ public class PlayerControler : MonoBehaviour
         }
 
         ApplyPerlinNoise();
+        
+        timerGamplay += Time.deltaTime;
     }
 
     #region M0UVE ACTIONS
@@ -84,10 +99,14 @@ public class PlayerControler : MonoBehaviour
     #region SERUM MANAGEMENT
     public void addSerum()
     {
-        serumBlue = serumBlue + 10f;
-        Debug.Log("+ de Serum");
-        Debug.Log("Serum Blue : " + serumBlue);
-    }
+        if (serumBlue >= 100) return;
+        else 
+        {
+            serumBlue +=10;
+            Debug.Log("Serum Blue : " + serumBlue);
+            OnBlueSerumCollision.Invoke(serumBlue);
+        }
     #endregion
+    }
 }
 
