@@ -27,14 +27,13 @@ public class PlayerControler : MonoBehaviour
     public UnityEvent<float> OnBlueSerumCollision;
 
     Vector3 targetPosition;
-    private float timerGamplay = 0f;
+
     bool isMoving = false;
     private float serumBlue = 80f;
     private float serumGreen = 100f;
     private float serumUYellow = 100f;
     private float serumUPurple = 100f;
-
-    private void Start()
+    public void InitPlayer()
     {
         targetPosition = transform.position;
         aimTarget.position = targetPosition;
@@ -42,20 +41,17 @@ public class PlayerControler : MonoBehaviour
         aimTarget.parent = null;
 
         OnInitSlider.Invoke(serumBlue);
-        timerGamplay = 0f;
     }
-
-    private void Update()
+    public void UpdatePlayer()
     {
-        if (!isMoving)
+                if (!isMoving)
         {
             if (Input.GetKeyDown(KeyCode.LeftArrow)) MoveLeft();
             if (Input.GetKeyDown(KeyCode.RightArrow)) MoveRight();
         }
 
         ApplyPerlinNoise();
-        
-        timerGamplay += Time.deltaTime;
+        Debug.Log("Serum Blue : " + serumBlue);
     }
 
     #region M0UVE ACTIONS
@@ -103,10 +99,15 @@ public class PlayerControler : MonoBehaviour
         else 
         {
             serumBlue +=10;
-            Debug.Log("Serum Blue : " + serumBlue);
             OnBlueSerumCollision.Invoke(serumBlue);
         }
-    #endregion
+    
     }
+    public void removeSerum(float minusSerum)
+    {
+        serumBlue = serumBlue - minusSerum;
+
+    }
+    #endregion
 }
 
