@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Animations;
 using DG.Tweening;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class PlayerControler : MonoBehaviour
 {
@@ -51,7 +52,9 @@ public class PlayerControler : MonoBehaviour
         }
 
         ApplyPerlinNoise();
-        Debug.Log("Serum Blue : " + serumBlue);
+        GameOverCheck();
+        Debug.Log("BlueSerum : " + serumBlue);
+        
     }
 
     #region M0UVE ACTIONS
@@ -106,7 +109,16 @@ public class PlayerControler : MonoBehaviour
     public void removeSerum(float minusSerum)
     {
         serumBlue = serumBlue - minusSerum;
+    }
 
+    private void GameOverCheck()
+    {
+        if (serumBlue <= 0) GameOver();
+    }
+
+    private void GameOver()
+    {
+        SceneManager.LoadScene("GameOver");
     }
     #endregion
 }

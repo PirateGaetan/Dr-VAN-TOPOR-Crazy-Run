@@ -2,10 +2,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour
 {
-    public string sceneName;
+    [SerializeField] private string nextSceneName;
     public void changeScene()
     {
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(nextSceneName);
     }
 }
 

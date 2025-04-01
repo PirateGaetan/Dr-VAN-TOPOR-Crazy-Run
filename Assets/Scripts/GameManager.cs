@@ -7,10 +7,10 @@ using UnityEngine.Events;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private PlayerControler player; 
-    [Header("Timer Settings")]
-    [SerializeField] private float timerDifficulty1 = 1f; 
+    [SerializeField] private float SerumDecreaseSpeed = 3f; 
     private float timerGamePlay = 0f;
     private float nextTimerGamePlay = 0f;
+    public float score = 0;
 
     void Awake()
     {
@@ -24,25 +24,32 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         player.UpdatePlayer();
+
         if (Time.time >= nextTimerGamePlay)
         {
-            nextTimerGamePlay = Time.time + 1f; // Ajoute 1 seconde au prochain déclenchement
+            nextTimerGamePlay = Time.time + 1f;
+            score +=1f;
             timerGamePlay++;
-            Debug.Log("Temps écoulé : " + timerGamePlay);
+            Debug.Log("score écoulé : " + score);
 
             ApplyGamePlayTimerEffect();
         }
     }
     private void ApplyGamePlayTimerEffect()
     {
-        player.removeSerum(timerDifficulty1);
+        player.removeSerum(SerumDecreaseSpeed);
         // Ajoute ici l'effet voulu, comme une diminution d'une ressource
     }
 
     private void OnGamePLaySceneLoad()
     {
         resetGamePlayTimer();
+        resetScore();
+    }
 
+    private void resetScore()
+    {
+        score = 0f;
     }
 
     private void resetGamePlayTimer()

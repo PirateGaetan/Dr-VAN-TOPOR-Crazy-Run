@@ -13,6 +13,4 @@ public class JaugeManagement : MonoBehaviour
     {
         slider.value = value;
     }
-    
-
 }
