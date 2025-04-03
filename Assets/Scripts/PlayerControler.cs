@@ -57,7 +57,7 @@ public class PlayerControler : MonoBehaviour
         ApplyPerlinNoise();
         MaxSerumManagement();
         GameOverCheck();
-        Debug.Log("BlueSerum &  GreenSerum: " + serumBlue + "  " + serumGreen);
+        // Debug.Log("BlueSerum &  GreenSerum: " + serumBlue + "  " + serumGreen);
     }
     #region M0UVE ACTIONS
     private void PlayerInputManagement()

@@ -498,7 +498,7 @@ Transform:
   m_GameObject: {fileID: 1110574573029462544}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.66, y: 1.77, z: 6.79}
+  m_LocalPosition: {x: -0.01999998, y: 1.77, z: 6.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -531,7 +531,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba82d0f9733dc4b019fecfebb5431306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
 --- !u!135 &6912502229050603863
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1550,7 +1549,7 @@ GameObject:
   - component: {fileID: 1683271606344569442}
   - component: {fileID: 4634016470836331599}
   m_Layer: 0
-  m_Name: Chunk_BC_1
+  m_Name: Chunk_BC_3
   m_TagString: ChunkTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4946,7 +4945,7 @@ Transform:
   m_GameObject: {fileID: 7886178751285252617}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.66, y: 1.77, z: 1.99}
+  m_LocalPosition: {x: -0.02, y: 1.77, z: 1.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4979,7 +4978,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba82d0f9733dc4b019fecfebb5431306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
 --- !u!135 &6575431073083593997
 SphereCollider:
   m_ObjectHideFlags: 0

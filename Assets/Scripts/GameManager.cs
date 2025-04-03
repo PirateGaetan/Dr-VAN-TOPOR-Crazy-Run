@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [Header("GAME DESIGN")]
     [SerializeField] private float SerumDecreaseSpeed;
     [SerializeField] public float dammageBlueCatalyser;
+    [SerializeField] public float dammageGreenCatalyser;
 
     private float timerGamePlay = 0f;
     private float nextTimerGamePlay = 0f;
