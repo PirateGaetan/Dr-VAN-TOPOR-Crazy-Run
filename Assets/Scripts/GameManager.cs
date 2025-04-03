@@ -47,7 +47,8 @@ public class GameManager : MonoBehaviour
 
     private void ApplyGamePlayTimerEffect()
     {
-        player.removeSerum(SerumDecreaseSpeed);
+        player.removeGreenSerum(SerumDecreaseSpeed);
+        player.removeBlueSerum(SerumDecreaseSpeed);
         // Ajoute ici l'effet voulu, comme une diminution d'une ressource
     }
 

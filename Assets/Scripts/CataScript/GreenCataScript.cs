@@ -12,7 +12,7 @@ public class GreenCataScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PlayerControler player = other.GetComponent<PlayerControler>();
-            player.removeSerum(gameManager.dammageGreenCatalyser);
+            player.removeGreenSerum(gameManager.dammageGreenCatalyser);
             Destroy(gameObject);
         }
     }

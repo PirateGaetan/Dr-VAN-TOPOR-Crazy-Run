@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class spawner : MonoBehaviour
 {
     [SerializeField] private List<GameObject> chunkPrefabs;
+    [SerializeField] private List<int> chunkWeights; 
     [SerializeField] private Transform container;
     private void OnTriggerExit(Collider other)
     {
@@ -17,8 +18,27 @@ public class spawner : MonoBehaviour
             newChunk.transform.SetParent(container);
         }
     }
+    // private GameObject GetRandomChunk()
+    // {
+    //     return chunkPrefabs[Random.Range(0, chunkPrefabs.Count)];
+    // }
     private GameObject GetRandomChunk()
     {
-        return chunkPrefabs[Random.Range(0, chunkPrefabs.Count)];
+        int totalWeight = 0;
+        foreach (int weight in chunkWeights)
+        {
+            totalWeight += weight;
+        }
+
+        int randomValue = Random.Range(0, totalWeight);
+        int cumulativeWeight = 0;
+
+        for (int i = 0; i < chunkPrefabs.Count; i++)
+        {
+            cumulativeWeight += chunkWeights[i];
+            if (randomValue < cumulativeWeight) return chunkPrefabs[i];
+        }
+
+        return chunkPrefabs[0];
     }
 }

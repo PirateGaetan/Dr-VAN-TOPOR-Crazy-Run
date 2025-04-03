@@ -480,7 +480,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8131123694826412221}
-  - component: {fileID: 4441920171444689770}
   - component: {fileID: 6912502229050603863}
   - component: {fileID: 681931032710031380}
   m_Layer: 0
@@ -520,18 +519,6 @@ Transform:
   - {fileID: 5186207026071766973}
   m_Father: {fileID: 1683271606344569442}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4441920171444689770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1110574573029462544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba82d0f9733dc4b019fecfebb5431306, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &6912502229050603863
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4940,8 +4927,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1538678344728887548}
-  - component: {fileID: 476842899082972119}
   - component: {fileID: 6575431073083593997}
+  - component: {fileID: 4432858510466800402}
   m_Layer: 0
   m_Name: Catalyseurs
   m_TagString: Untagged
@@ -4979,18 +4966,6 @@ Transform:
   - {fileID: 4600701837485614685}
   m_Father: {fileID: 1683271606344569442}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &476842899082972119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7886178751285252617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba82d0f9733dc4b019fecfebb5431306, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &6575431073083593997
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5012,6 +4987,18 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: -0.71, z: -0.06}
+--- !u!114 &4432858510466800402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7886178751285252617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16c55cb525a2a4af09da1b0a0e5c2305, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7990161331714119727
 GameObject:
   m_ObjectHideFlags: 0

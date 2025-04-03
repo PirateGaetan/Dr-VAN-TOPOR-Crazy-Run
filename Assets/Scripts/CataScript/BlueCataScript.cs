@@ -12,7 +12,7 @@ public class BlueCataScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PlayerControler player = other.GetComponent<PlayerControler>();
-            player.removeSerum(gameManager.dammageBlueCatalyser);
+            player.removeBlueSerum(gameManager.dammageBlueCatalyser);
             Destroy(gameObject);
         }
     }

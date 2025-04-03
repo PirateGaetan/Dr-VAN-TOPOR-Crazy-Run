@@ -123,13 +123,17 @@ public class PlayerControler : MonoBehaviour
             OnGreenSerumCollision.Invoke(serumGreen);
         }
     }
-    public void removeSerum(float minusSerum)
+    public void removeBlueSerum(float minusSerum)
     {
         serumBlue = serumBlue - minusSerum;
         BlueSerum.SetBlueSlider(serumBlue);
+    }
+    public void removeGreenSerum(float minusSerum)
+    {
         serumGreen = serumGreen - minusSerum;
         GreenSerum.SetGreenSlider(serumGreen);
     }
+
     private void MaxSerumManagement()
     {
         if (serumBlue >= 100) serumBlue = 100f;
