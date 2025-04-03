@@ -3,11 +3,16 @@ using UnityEngine.SceneManagement;
 using System;
 using System.Collections;
 using UnityEngine.Events;
+using System.Threading;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("REFERENCES")]
     [SerializeField] private PlayerControler player; 
-    [SerializeField] private float SerumDecreaseSpeed = 3f; 
+    [Header("GAME DESIGN")]
+    [SerializeField] private float SerumDecreaseSpeed;
+    [SerializeField] public float dammageBlueCatalyser;
+
     private float timerGamePlay = 0f;
     private float nextTimerGamePlay = 0f;
     public float score = 0;
@@ -27,14 +32,18 @@ public class GameManager : MonoBehaviour
 
         if (Time.time >= nextTimerGamePlay)
         {
-            nextTimerGamePlay = Time.time + 1f;
+            TimerManagement();
             score +=1f;
-            timerGamePlay++;
-            Debug.Log("score écoulé : " + score);
-
             ApplyGamePlayTimerEffect();
         }
     }
+
+    private void TimerManagement()
+    {
+        nextTimerGamePlay = Time.time + 1f;
+        timerGamePlay++;
+    }
+
     private void ApplyGamePlayTimerEffect()
     {
         player.removeSerum(SerumDecreaseSpeed);
