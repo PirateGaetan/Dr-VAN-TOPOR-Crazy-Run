@@ -148,7 +148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7050f79714234c5dbd83e5f7fab1302, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedChunk: 6
 --- !u!4 &46757448
 Transform:
   m_ObjectHideFlags: 0
@@ -1401,7 +1400,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aimTarget: {fileID: 608816904}
   playerModel: {fileID: 389665947}
-  range: 3
   moveDuration: 0.75
   aimSpeed: 0.5
   aimeRange: 5
@@ -2365,6 +2363,10 @@ MonoBehaviour:
   SerumDecreaseSpeed: 3
   dammageBlueCatalyser: 20
   dammageGreenCatalyser: 20
+  speedChunk: 6
+  increaseSpeedCHunkFactor: 1.01
+  timeToLevel2: 5
+  timeToLevel3: 30
   score: 0
 --- !u!4 &1517291904
 Transform:

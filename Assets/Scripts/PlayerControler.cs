@@ -1,65 +1,70 @@
 using System;
-using NUnit.Framework.Constraints;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Animations;
-using DG.Tweening;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class PlayerControler : MonoBehaviour
 {
-    [Header("REFENCES")]
+    [Header("REFERENCES")]
     [SerializeField] Transform aimTarget;
     [SerializeField] Transform playerModel;
+
     [Header("MOVEMENTS")]
-    [SerializeField, Range(1f, 5f)] private float range= 1f;
     [SerializeField] private float moveDuration = 1f;
+
     [Header("AIM")]
     [SerializeField] private float aimSpeed = 0.5f;
     [SerializeField] private float aimeRange = 5f;
+
     [Header("NOISE")]
     [SerializeField] private float noiseAmplitude = 0.05f;
     [SerializeField] private float noiseSpeed = 0.5f;
-    [Header("Slider Serum")]
-    [SerializeField] private BlueSliderManager BlueSerum; 
-    [SerializeField] private GreenSliderManager GreenSerum; 
 
-    [Header("EVENT")]
-  
+    [Header("Slider Serum")]
+    [SerializeField] private BlueSliderManager BlueSerum;
+    [SerializeField] private GreenSliderManager GreenSerum;
+
+    [Header("EVENTS")]
     public UnityEvent<float> OnInitSlider;
     public UnityEvent<float> OnBlueSerumCollision;
     public UnityEvent<float> OnGreenSerumCollision;
 
-    
+    private Vector3 targetPosition;
+    private bool isMoving = false;
 
-    Vector3 targetPosition;
-
-    bool isMoving = false;
+    // SERUM
     private float serumBlue = 100f;
     private float serumGreen = 100f;
-    private float serumUYellow = 100f;
-    private float serumUPurple = 100f;
+
+    // LANES
+    private float[] lanePositions;
+    private int currentLaneIndex = 0;
+    private float lastLeftTapTime = -1f;
+    private float lastRightTapTime = -1f;
+    private float doubleTapThreshold = 0.3f; // 300 ms
+
     public void InitPlayer()
     {
         targetPosition = transform.position;
-        aimTarget.position = targetPosition;
-        aimTarget.position = Vector3.forward* aimeRange;
+        aimTarget.position = Vector3.forward * aimeRange;
         aimTarget.parent = null;
+
+        SetLanesForLevel(1); // Niveau de départ
 
         OnInitSlider.Invoke(serumBlue);
         OnInitSlider.Invoke(serumGreen);
-
     }
+
     public void UpdatePlayer()
     {
         PlayerInputManagement();
         ApplyPerlinNoise();
         MaxSerumManagement();
         GameOverCheck();
-        // Debug.Log("BlueSerum &  GreenSerum: " + serumBlue + "  " + serumGreen);
     }
-    #region M0UVE ACTIONS
+
+    #region MOVEMENT
     private void PlayerInputManagement()
     {
         if (!isMoving)
@@ -68,81 +73,134 @@ public class PlayerControler : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.RightArrow)) MoveRight();
         }
     }
+
     private void MoveLeft()
     {
-        if (targetPosition.x > -range)
+        if (currentLaneIndex > 0)
         {
-            targetPosition += Vector3.left * range;
-            MoveToTarget();
+            currentLaneIndex--;
+            MoveToLane();
         }
     }
+
     private void MoveRight()
     {
-        if (targetPosition.x < range)
+        if (currentLaneIndex < lanePositions.Length - 1)
         {
-            targetPosition += Vector3.right * range;
-            MoveToTarget();
+            currentLaneIndex++;
+            MoveToLane();
         }
     }
-    private void MoveToTarget()
+
+    private void MoveToLane()
     {
         isMoving = true;
+        targetPosition = new Vector3(lanePositions[currentLaneIndex], transform.position.y, transform.position.z);
         Aim(targetPosition);
         transform.DOMove(targetPosition, moveDuration).SetEase(Ease.InOutSine).OnComplete(() => isMoving = false);
-        
     }
+
     private void Aim(Vector3 direction)
     {
         Vector3 target = new Vector3(direction.x, 0, aimeRange);
-        aimTarget.DOMove(target, aimSpeed).SetEase(Ease.InOutSine); 
+        aimTarget.DOMove(target, aimSpeed).SetEase(Ease.InOutSine);
     }
+
     private void ApplyPerlinNoise()
     {
-        float pelinValue = Mathf.PerlinNoise(Time.time * noiseSpeed, 0);
-        float offset = (pelinValue - 0.5f) * 2f * noiseAmplitude;
-
+        float perlin = Mathf.PerlinNoise(Time.time * noiseSpeed, 0);
+        float offset = (perlin - 0.5f) * 2f * noiseAmplitude;
         playerModel.localPosition = new Vector3(offset, 0, offset);
     }
     #endregion
-    #region SERUM MANAGEMENT
+
+    #region LANES & LEVEL
+    public void SetLanesForLevel(int level)
+    {
+        switch (level)
+        {
+            case 1:
+                lanePositions = new float[] { -3f, 0f, 3f };
+                break;
+            case 2:
+                lanePositions = new float[] { -6f, -3f, 0f, 3f };
+                break;
+            case 3:
+                lanePositions = new float[] { -6f, -3f, 0f, 3f, 6f };
+                break;
+            default:
+                lanePositions = new float[] { 0f };
+                break;
+        }
+
+        float currentX = transform.position.x;
+        currentLaneIndex = GetClosestLaneIndex(currentX);
+        targetPosition = new Vector3(lanePositions[currentLaneIndex], transform.position.y, transform.position.z);
+        transform.position = targetPosition;
+    }
+
+    private int GetClosestLaneIndex(float x)
+    {
+        int closest = 0;
+        float minDist = Mathf.Abs(x - lanePositions[0]);
+        for (int i = 1; i < lanePositions.Length; i++)
+        {
+            float dist = Mathf.Abs(x - lanePositions[i]);
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = i;
+            }
+        }
+        return closest;
+    }
+    #endregion
+
+    #region SERUM
     public void addBlueSerum()
     {
-        if (serumBlue >= 100) return;
-        else 
+        if (serumBlue < 100)
         {
-            serumBlue +=10;
+            serumBlue += 10;
             OnBlueSerumCollision.Invoke(serumBlue);
         }
     }
+
     public void addGreenSerum()
     {
-        if (serumGreen >= 100) return;
-        else 
+        if (serumGreen < 100)
         {
-            serumGreen +=10;
+            serumGreen += 10;
             OnGreenSerumCollision.Invoke(serumGreen);
         }
     }
+
     public void removeBlueSerum(float minusSerum)
     {
-        serumBlue = serumBlue - minusSerum;
+        serumBlue -= minusSerum;
         BlueSerum.SetBlueSlider(serumBlue);
     }
+
     public void removeGreenSerum(float minusSerum)
     {
-        serumGreen = serumGreen - minusSerum;
+        serumGreen -= minusSerum;
         GreenSerum.SetGreenSlider(serumGreen);
     }
 
     private void MaxSerumManagement()
     {
-        if (serumBlue >= 100) serumBlue = 100f;
-        if (serumGreen >= 100) serumGreen = 100f;
+        if (serumBlue > 100) serumBlue = 100;
+        if (serumGreen > 100) serumGreen = 100;
     }
+    #endregion
 
+    #region GAME OVER
     private void GameOverCheck()
     {
-        if (serumBlue <= 0) GameOver();
+        if (serumBlue <= 0)
+        {
+            GameOver();
+        }
     }
 
     private void GameOver()
@@ -151,4 +209,3 @@ public class PlayerControler : MonoBehaviour
     }
     #endregion
 }
-
