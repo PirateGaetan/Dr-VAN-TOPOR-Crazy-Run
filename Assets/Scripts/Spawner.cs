@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class spawner : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> chunkPrefabs;
-    [SerializeField] private List<int> chunkWeights; 
+    [SerializeField] private List<GameObject> chunkPrefabsLevel1;
+    [SerializeField] private List<int> chunkWeightsLevel1; 
     [SerializeField] private Transform container;
     private void OnTriggerExit(Collider other)
     {
@@ -18,14 +18,10 @@ public class spawner : MonoBehaviour
             newChunk.transform.SetParent(container);
         }
     }
-    // private GameObject GetRandomChunk()
-    // {
-    //     return chunkPrefabs[Random.Range(0, chunkPrefabs.Count)];
-    // }
     private GameObject GetRandomChunk()
     {
         int totalWeight = 0;
-        foreach (int weight in chunkWeights)
+        foreach (int weight in chunkWeightsLevel1)
         {
             totalWeight += weight;
         }
@@ -33,12 +29,12 @@ public class spawner : MonoBehaviour
         int randomValue = Random.Range(0, totalWeight);
         int cumulativeWeight = 0;
 
-        for (int i = 0; i < chunkPrefabs.Count; i++)
+        for (int i = 0; i < chunkPrefabsLevel1.Count; i++)
         {
-            cumulativeWeight += chunkWeights[i];
-            if (randomValue < cumulativeWeight) return chunkPrefabs[i];
+            cumulativeWeight += chunkWeightsLevel1[i];
+            if (randomValue < cumulativeWeight) return chunkPrefabsLevel1[i];
         }
 
-        return chunkPrefabs[0];
+        return chunkPrefabsLevel1[0];
     }
 }

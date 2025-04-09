@@ -24,11 +24,15 @@ public class PlayerControler : MonoBehaviour
     [Header("Slider Serum")]
     [SerializeField] private BlueSliderManager BlueSerum;
     [SerializeField] private GreenSliderManager GreenSerum;
+    [SerializeField] private PurpleSliderManager PurpleSerum;
+    [SerializeField] private YellowSliderManager YellowSerum;
 
     [Header("EVENTS")]
     public UnityEvent<float> OnInitSlider;
     public UnityEvent<float> OnBlueSerumCollision;
     public UnityEvent<float> OnGreenSerumCollision;
+    public UnityEvent<float> OnPurpleSerumCollision;
+    public UnityEvent<float> OnYellowSerumCollision;
 
     private Vector3 targetPosition;
     private bool isMoving = false;
@@ -36,6 +40,9 @@ public class PlayerControler : MonoBehaviour
     // SERUM
     private float serumBlue = 100f;
     private float serumGreen = 100f;
+    private float serumPurple = 100f;
+    private float serumYellow = 100f;
+
 
     // LANES
     private float[] lanePositions;
@@ -165,13 +172,28 @@ public class PlayerControler : MonoBehaviour
             OnBlueSerumCollision.Invoke(serumBlue);
         }
     }
-
     public void addGreenSerum()
     {
         if (serumGreen < 100)
         {
             serumGreen += 10;
             OnGreenSerumCollision.Invoke(serumGreen);
+        }
+    }
+    public void addPurpleSerum()
+    {
+        if (serumPurple < 100)
+        {
+            serumPurple += 10;
+            OnPurpleSerumCollision.Invoke(serumGreen);
+        }
+    }
+    public void addYellowSerum()
+    {
+        if (serumYellow < 100)
+        {
+            serumYellow += 10;
+            OnYellowSerumCollision.Invoke(serumGreen);
         }
     }
 
@@ -185,6 +207,16 @@ public class PlayerControler : MonoBehaviour
     {
         serumGreen -= minusSerum;
         GreenSerum.SetGreenSlider(serumGreen);
+    }
+    public void removePurpleSerum(float minusSerum)
+    {
+        serumGreen -= minusSerum;
+        PurpleSerum.SetPurpleSlider(serumGreen);
+    }
+    public void removeYellowSerum(float minusSerum)
+    {
+        serumGreen -= minusSerum;
+        YellowSerum.SetYellowSlider(serumGreen);
     }
 
     private void MaxSerumManagement()

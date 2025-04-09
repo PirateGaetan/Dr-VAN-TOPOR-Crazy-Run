@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float SerumDecreaseSpeed = 1f;
     [SerializeField] public float dammageBlueCatalyser = 10f;
     [SerializeField] public float dammageGreenCatalyser = 10f;
+    [SerializeField] public float dammageYellowCatalyser = 10f;
+    [SerializeField] public float dammagePurpleCatalyser = 10f;
     [SerializeField] public float speedChunk = 6f;
     [SerializeField] public float increaseSpeedCHunkFactor = 1.01f;
     [SerializeField] public float timeToLevel2;
@@ -108,6 +110,8 @@ public class GameManager : MonoBehaviour
     {
         player.removeGreenSerum(SerumDecreaseSpeed);
         player.removeBlueSerum(SerumDecreaseSpeed);
+        player.removeYellowSerum(SerumDecreaseSpeed);
+        player.removePurpleSerum(SerumDecreaseSpeed);
     }
 
     private void OnGamePLaySceneLoad()
