@@ -12,7 +12,7 @@ public class YellowCataScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PlayerControler player = other.GetComponent<PlayerControler>();
-            player.removeYellowSerum(gameManager.dammageYellowCatalyser);
+            player.RemoveYellowSerum(gameManager.dammageYellowCatalyser);
             Destroy(gameObject);
         }
     }

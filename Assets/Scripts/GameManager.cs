@@ -108,10 +108,10 @@ public class GameManager : MonoBehaviour
 
     private void ApplyGamePlayTimerEffect()
     {
-        player.removeGreenSerum(SerumDecreaseSpeed);
-        player.removeBlueSerum(SerumDecreaseSpeed);
-        player.removeYellowSerum(SerumDecreaseSpeed);
-        player.removePurpleSerum(SerumDecreaseSpeed);
+        player.RemoveGreenSerum(SerumDecreaseSpeed);
+        player.RemoveBlueSerum(SerumDecreaseSpeed);
+        player.RemoveYellowSerum(SerumDecreaseSpeed);
+        player.RemovePurpleSerum(SerumDecreaseSpeed);
     }
 
     private void OnGamePLaySceneLoad()

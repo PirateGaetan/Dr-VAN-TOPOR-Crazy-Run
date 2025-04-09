@@ -6,7 +6,7 @@ public class bluePillsScript : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<PlayerControler>().addBlueSerum();
+            other.GetComponent<PlayerControler>().AddBlueSerum();
             Destroy(gameObject);
         }
     }

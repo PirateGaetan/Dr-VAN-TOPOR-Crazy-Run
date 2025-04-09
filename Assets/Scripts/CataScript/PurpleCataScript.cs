@@ -12,7 +12,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PlayerControler player = other.GetComponent<PlayerControler>();
-            player.removePurpleSerum(gameManager.dammagePurpleCatalyser);
+            player.RemovePurpleSerum(gameManager.dammagePurpleCatalyser);
             Destroy(gameObject);
         }
     }

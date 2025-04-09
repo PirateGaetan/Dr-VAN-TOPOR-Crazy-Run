@@ -59,15 +59,13 @@ public class PlayerControler : MonoBehaviour
 
         SetLanesForLevel(1); // Niveau de départ
 
-        OnInitSlider.Invoke(serumBlue);
-        OnInitSlider.Invoke(serumGreen);
+        UpdateAllSerums();
     }
 
     public void UpdatePlayer()
     {
         PlayerInputManagement();
         ApplyPerlinNoise();
-        MaxSerumManagement();
         GameOverCheck();
     }
 
@@ -164,72 +162,78 @@ public class PlayerControler : MonoBehaviour
     #endregion
 
     #region SERUM
-    public void addBlueSerum()
+    private void UpdateAllSerums()
+    {
+        OnBlueSerumCollision.Invoke(serumBlue);
+        OnGreenSerumCollision.Invoke(serumGreen);
+        OnPurpleSerumCollision.Invoke(serumPurple);
+        OnYellowSerumCollision.Invoke(serumYellow);
+    }
+    public void AddBlueSerum()
     {
         if (serumBlue < 100)
         {
             serumBlue += 10;
+            serumBlue = Mathf.Clamp(serumBlue + 10, 0, 100);
             OnBlueSerumCollision.Invoke(serumBlue);
         }
     }
-    public void addGreenSerum()
+    public void AddGreenSerum()
     {
         if (serumGreen < 100)
         {
             serumGreen += 10;
+            serumGreen = Mathf.Clamp(serumGreen + 10, 0, 100);
             OnGreenSerumCollision.Invoke(serumGreen);
+            
         }
     }
-    public void addPurpleSerum()
+    public void AddPurpleSerum()
     {
         if (serumPurple < 100)
         {
             serumPurple += 10;
-            OnPurpleSerumCollision.Invoke(serumGreen);
+            serumPurple = Mathf.Clamp(serumPurple + 10, 0, 100);
+            OnPurpleSerumCollision.Invoke(serumPurple);
         }
     }
-    public void addYellowSerum()
+    public void AddYellowSerum()
     {
         if (serumYellow < 100)
         {
             serumYellow += 10;
-            OnYellowSerumCollision.Invoke(serumGreen);
+            serumYellow = Mathf.Clamp(serumYellow + 10, 0, 100);
+            OnYellowSerumCollision.Invoke(serumYellow);
         }
     }
 
-    public void removeBlueSerum(float minusSerum)
+    public void RemoveBlueSerum(float minusSerum)
     {
         serumBlue -= minusSerum;
         BlueSerum.SetBlueSlider(serumBlue);
     }
 
-    public void removeGreenSerum(float minusSerum)
+    public void RemoveGreenSerum(float minusSerum)
     {
         serumGreen -= minusSerum;
         GreenSerum.SetGreenSlider(serumGreen);
     }
-    public void removePurpleSerum(float minusSerum)
+    public void RemovePurpleSerum(float minusSerum)
     {
-        serumGreen -= minusSerum;
-        PurpleSerum.SetPurpleSlider(serumGreen);
+        serumPurple -= minusSerum;
+        PurpleSerum.SetPurpleSlider(serumPurple);
     }
-    public void removeYellowSerum(float minusSerum)
+    public void RemoveYellowSerum(float minusSerum)
     {
-        serumGreen -= minusSerum;
-        YellowSerum.SetYellowSlider(serumGreen);
-    }
-
-    private void MaxSerumManagement()
-    {
-        if (serumBlue > 100) serumBlue = 100;
-        if (serumGreen > 100) serumGreen = 100;
+        serumYellow -= minusSerum;
+        YellowSerum.SetYellowSlider(serumYellow);
     }
     #endregion
 
     #region GAME OVER
     private void GameOverCheck()
     {
-        if (serumBlue <= 0)
+        if (serumBlue <= 0 || serumGreen <= 0 || serumPurple <= 0 || serumYellow <= 0)
         {
             GameOver();
         }
