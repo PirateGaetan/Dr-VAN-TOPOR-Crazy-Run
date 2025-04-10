@@ -49,7 +49,7 @@ public class PlayerControler : MonoBehaviour
     private int currentLaneIndex = 0;
     private float lastLeftTapTime = -1f;
     private float lastRightTapTime = -1f;
-    private float doubleTapThreshold = 0.3f; // 300 ms
+    private float doubleTapThreshold = 0.3f; 
 
     public void InitPlayer()
     {
@@ -57,7 +57,7 @@ public class PlayerControler : MonoBehaviour
         aimTarget.position = Vector3.forward * aimeRange;
         aimTarget.parent = null;
 
-        SetLanesForLevel(1); // Niveau de départ
+        SetLanesForLevel(1); 
 
         UpdateAllSerums();
     }
@@ -74,27 +74,49 @@ public class PlayerControler : MonoBehaviour
     {
         if (!isMoving)
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow)) MoveLeft();
-            if (Input.GetKeyDown(KeyCode.RightArrow)) MoveRight();
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                float timeSinceLastTap = Time.time - lastLeftTapTime;
+                if (timeSinceLastTap <= doubleTapThreshold)
+                {
+                    MoveLeft(true); // => Double Tap
+                }
+                else
+                {
+                    MoveLeft(false); // => Simple Tap
+                }
+                lastLeftTapTime = Time.time;
+            }
+
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                float timeSinceLastTap = Time.time - lastRightTapTime;
+                if (timeSinceLastTap <= doubleTapThreshold)
+                {
+                    MoveRight(true); // Double Tap
+                }
+                else
+                {
+                    MoveRight(false); // Simple Tap
+                }
+                lastRightTapTime = Time.time;
+            }
         }
     }
-
-    private void MoveLeft()
+    private void MoveLeft(bool isDoubleTap)
     {
-        if (currentLaneIndex > 0)
-        {
-            currentLaneIndex--;
-            MoveToLane();
-        }
+        int lanesToMove = isDoubleTap ? 2 : 1;
+
+        currentLaneIndex = Mathf.Max(0, currentLaneIndex - lanesToMove);
+        MoveToLane();
     }
 
-    private void MoveRight()
+    private void MoveRight(bool isDoubleTap)
     {
-        if (currentLaneIndex < lanePositions.Length - 1)
-        {
-            currentLaneIndex++;
-            MoveToLane();
-        }
+        int lanesToMove = isDoubleTap ? 2 : 1;
+
+        currentLaneIndex = Mathf.Min(lanePositions.Length - 1, currentLaneIndex + lanesToMove);
+        MoveToLane();
     }
 
     private void MoveToLane()
