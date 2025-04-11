@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] public float increaseSpeedCHunkFactor = 1.01f;
     [SerializeField] public float timeToLevel2;
     [SerializeField] public float timeToLevel3;
+
+    public event Action<GameLevel> OnLevelChanged;
 
     private float initialChunkSpeed;
     private float maxChunkSpeed;
@@ -69,19 +71,15 @@ public class GameManager : MonoBehaviour
 
     private void CheckLevelProgression()
     {
-        if (timerGamePlay >= timeToLevel3 && currentLevel != GameLevel.Level3)
-        {
-            SetLevel(GameLevel.Level3);
-        }
-        else if (timerGamePlay >= timeToLevel2 && currentLevel != GameLevel.Level2)
-        {
-            SetLevel(GameLevel.Level2);
-        }
+        if (timerGamePlay >= timeToLevel3) SetLevel(GameLevel.Level3);
+        else if (timerGamePlay >= timeToLevel2) SetLevel(GameLevel.Level2);
     }
 
     private void SetLevel(GameLevel newLevel)
     {
         currentLevel = newLevel;
+        OnLevelChanged?.Invoke(currentLevel);
+        Debug.Log("Changement de niveau : " + currentLevel);
 
         switch (currentLevel)
         {
@@ -110,8 +108,8 @@ public class GameManager : MonoBehaviour
     {
         player.RemoveGreenSerum(SerumDecreaseSpeed);
         player.RemoveBlueSerum(SerumDecreaseSpeed);
-        player.RemoveYellowSerum(SerumDecreaseSpeed);
-        player.RemovePurpleSerum(SerumDecreaseSpeed);
+        if (currentLevel == GameLevel.Level2 || currentLevel == GameLevel.Level3) player.RemoveYellowSerum(SerumDecreaseSpeed);
+        if (currentLevel == GameLevel.Level3) player.RemovePurpleSerum(SerumDecreaseSpeed);
     }
 
     private void OnGamePLaySceneLoad()
