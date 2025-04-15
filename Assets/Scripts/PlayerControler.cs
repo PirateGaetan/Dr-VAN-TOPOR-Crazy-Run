@@ -6,7 +6,10 @@ using DG.Tweening;
 
 public class PlayerControler : MonoBehaviour
 {
+    
+
     [Header("REFERENCES")]
+    [SerializeField] private GameManager gameManager;
     [SerializeField] Transform aimTarget;
     [SerializeField] Transform playerModel;
 
@@ -36,6 +39,7 @@ public class PlayerControler : MonoBehaviour
 
     private Vector3 targetPosition;
     private bool isMoving = false;
+    private float score;
 
     // SERUM
     private float serumBlue = 100f;
@@ -263,6 +267,8 @@ public class PlayerControler : MonoBehaviour
 
     private void GameOver()
     {
+        float currentScore = gameManager.GetScore();
+        ScoreManager.SaveScore(currentScore);
         SceneManager.LoadScene("GameOver");
     }
     #endregion

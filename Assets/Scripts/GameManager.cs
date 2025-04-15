@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public float dammageYellowCatalyser = 10f;
     [SerializeField] public float dammagePurpleCatalyser = 10f;
     [SerializeField] public float speedChunk = 6f;
-    [SerializeField] public float increaseSpeedCHunkFactor = 1.01f;
+    [SerializeField] public float increaseSpeedChunkFactor = 1.01f;
     [SerializeField] public float timeToLevel2;
     [SerializeField] public float timeToLevel3;
 
@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
 
     private void IncreaseChunkSpeed()
     {
-        speedChunk *= increaseSpeedCHunkFactor;
+        speedChunk *= increaseSpeedChunkFactor;
         if (speedChunk > maxChunkSpeed)
         {
             speedChunk = maxChunkSpeed;
@@ -136,5 +136,9 @@ public class GameManager : MonoBehaviour
     public GameLevel GetCurrentLevel()
     {
         return currentLevel;
+    }
+    public float GetScore()
+    {
+        return score;
     }
 }
