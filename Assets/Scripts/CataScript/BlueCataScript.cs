@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class BlueCataScript : MonoBehaviour
 {
-    private GameManager gameManager; 
+    [SerializeField] private AudioClip hitSFX;
+
+    private GameManager gameManager;
+
     private void Awake()
     {
         gameManager = FindObjectOfType<GameManager>();
@@ -13,9 +16,13 @@ public class BlueCataScript : MonoBehaviour
         {
             PlayerControler player = other.GetComponent<PlayerControler>();
             player.RemoveBlueSerum(gameManager.dammageBlueCatalyser);
+            
             gameManager.TriggerSpeedReduction(gameManager.CataColisionDuration, gameManager.CataColisionSpeedReduction);
+            
+            AudioSource playerAudio = other.GetComponent<AudioSource>();
+            playerAudio.PlayOneShot(hitSFX);
+            
             Destroy(gameObject);
         }
     }
 }
-

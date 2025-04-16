@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     private float nextTimerGamePlay = 0f;
     private float lastSpeedIncreaseTime = -1f;
     private bool isAdrenalineActive = false;
+    
 
     public float score = 0f;
 

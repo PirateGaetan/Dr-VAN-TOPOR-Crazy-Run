@@ -531,7 +531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba82d0f9733dc4b019fecfebb5431306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
+  hitSFX: {fileID: 8300000, guid: 4c9af08910723422b9decbcc1991db2e, type: 3}
 --- !u!135 &6912502229050603863
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4979,7 +4979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba82d0f9733dc4b019fecfebb5431306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
+  hitSFX: {fileID: 8300000, guid: 4c9af08910723422b9decbcc1991db2e, type: 3}
 --- !u!135 &6575431073083593997
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class YellowCataScript : MonoBehaviour
 {
+    [SerializeField] private AudioClip hitSFX;
+
     private GameManager gameManager; 
+
     private void Awake()
     {
         gameManager = FindObjectOfType<GameManager>();
@@ -13,7 +16,12 @@ public class YellowCataScript : MonoBehaviour
         {
             PlayerControler player = other.GetComponent<PlayerControler>();
             player.RemoveYellowSerum(gameManager.dammageYellowCatalyser);
+
             gameManager.TriggerSpeedReduction(gameManager.CataColisionDuration, gameManager.CataColisionSpeedReduction);
+            
+            AudioSource playerAudio = other.GetComponent<AudioSource>();
+            playerAudio.PlayOneShot(hitSFX);
+            
             Destroy(gameObject);
         }
     }
