@@ -13,6 +13,7 @@ public class GreenCataScript : MonoBehaviour
         {
             PlayerControler player = other.GetComponent<PlayerControler>();
             player.RemoveGreenSerum(gameManager.dammageGreenCatalyser);
+            gameManager.TriggerSpeedReduction(gameManager.CataColisionDuration, gameManager.CataColisionSpeedReduction);
             Destroy(gameObject);
         }
     }

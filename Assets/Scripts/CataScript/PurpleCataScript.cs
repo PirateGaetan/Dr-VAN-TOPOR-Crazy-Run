@@ -13,6 +13,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
         {
             PlayerControler player = other.GetComponent<PlayerControler>();
             player.RemovePurpleSerum(gameManager.dammagePurpleCatalyser);
+            gameManager.TriggerSpeedReduction(gameManager.CataColisionDuration, gameManager.CataColisionSpeedReduction);
             Destroy(gameObject);
         }
     }

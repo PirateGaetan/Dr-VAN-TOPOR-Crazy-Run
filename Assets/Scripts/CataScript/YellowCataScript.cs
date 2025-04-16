@@ -13,6 +13,7 @@ public class YellowCataScript : MonoBehaviour
         {
             PlayerControler player = other.GetComponent<PlayerControler>();
             player.RemoveYellowSerum(gameManager.dammageYellowCatalyser);
+            gameManager.TriggerSpeedReduction(gameManager.CataColisionDuration, gameManager.CataColisionSpeedReduction);
             Destroy(gameObject);
         }
     }

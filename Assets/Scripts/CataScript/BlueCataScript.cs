@@ -13,6 +13,7 @@ public class BlueCataScript : MonoBehaviour
         {
             PlayerControler player = other.GetComponent<PlayerControler>();
             player.RemoveBlueSerum(gameManager.dammageBlueCatalyser);
+            gameManager.TriggerSpeedReduction(gameManager.CataColisionDuration, gameManager.CataColisionSpeedReduction);
             Destroy(gameObject);
         }
     }

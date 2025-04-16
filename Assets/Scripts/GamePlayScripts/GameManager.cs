@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] public float increaseSpeedChunkFactor = 1.01f;
     [SerializeField] public float timeToLevel2;
     [SerializeField] public float timeToLevel3;
+    [SerializeField] public float CataColisionDuration = 0.1f;
+    [SerializeField] public float CataColisionSpeedReduction = 0.2f;
+
 
     public event Action<GameLevel> OnLevelChanged;
 
@@ -46,6 +49,7 @@ public class GameManager : MonoBehaviour
         player.InitPlayer();
         initialChunkSpeed = speedChunk;
         maxChunkSpeed = initialChunkSpeed * 3f;
+        
     }
 
     void Update()
@@ -107,6 +111,33 @@ public class GameManager : MonoBehaviour
         {
             speedChunk = maxChunkSpeed;
         }
+    }
+    public void TriggerSpeedReduction(float CataColisionDuration, float CataColisionSpeedReduction)
+    {
+        StartCoroutine(TemporarySpeedReduction(CataColisionDuration, CataColisionSpeedReduction));
+    }
+
+    private IEnumerator TemporarySpeedReduction(float CataColisionDuration, float CataColisionSpeedReduction)
+    {
+        if (speedChunk < initialChunkSpeed )
+        {
+            float originalSpeed = speedChunk;
+
+            yield return new WaitForSeconds(CataColisionDuration);
+
+            speedChunk = originalSpeed;
+        }
+        else
+        {
+            float originalSpeed = speedChunk;
+            speedChunk *= CataColisionSpeedReduction;
+
+            yield return new WaitForSeconds(CataColisionDuration);
+
+            speedChunk = originalSpeed;
+
+        }
+
     }
 
     private void ApplyGamePlayTimerEffect()

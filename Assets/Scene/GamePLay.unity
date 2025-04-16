@@ -2957,6 +2957,8 @@ MonoBehaviour:
   increaseSpeedChunkFactor: 1.01
   timeToLevel2: 15
   timeToLevel3: 30
+  CataColisionDuration: 0.2
+  CataColisionSpeedReduction: 0.2
   score: 0
 --- !u!4 &1517291904
 Transform:
