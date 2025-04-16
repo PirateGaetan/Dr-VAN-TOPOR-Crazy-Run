@@ -4,6 +4,7 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 
+
 public class PlayerControler : MonoBehaviour
 {
     
@@ -40,12 +41,14 @@ public class PlayerControler : MonoBehaviour
     private Vector3 targetPosition;
     private bool isMoving = false;
     private float score;
+    
 
     // SERUM
     private float serumBlue = 100f;
     private float serumGreen = 100f;
     private float serumPurple = 100f;
     private float serumYellow = 100f;
+
 
 
     // LANES
@@ -211,7 +214,6 @@ public class PlayerControler : MonoBehaviour
             serumGreen += 10;
             serumGreen = Mathf.Clamp(serumGreen + 10, 0, 100);
             OnGreenSerumCollision.Invoke(serumGreen);
-            
         }
     }
     public void AddPurpleSerum()
@@ -232,7 +234,6 @@ public class PlayerControler : MonoBehaviour
             OnYellowSerumCollision.Invoke(serumYellow);
         }
     }
-
     public void RemoveBlueSerum(float minusSerum)
     {
         serumBlue -= minusSerum;

@@ -1,10 +1,14 @@
 using UnityEngine;
 using System;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
     [Header("REFERENCES")]
     [SerializeField] private PlayerControler player;
+
+    [Header("UI")]
+    [SerializeField] private GameObject adrenalineEffectUI;
 
     [Header("GAME DESIGN")]
     [SerializeField] private float SerumDecreaseSpeed = 1f;
@@ -25,6 +29,7 @@ public class GameManager : MonoBehaviour
     private float timerGamePlay = 0f;
     private float nextTimerGamePlay = 0f;
     private float lastSpeedIncreaseTime = -1f;
+    private bool isAdrenalineActive = false;
 
     public float score = 0f;
 
@@ -106,10 +111,25 @@ public class GameManager : MonoBehaviour
 
     private void ApplyGamePlayTimerEffect()
     {
+        if (isAdrenalineActive) return;
         player.RemoveGreenSerum(SerumDecreaseSpeed);
         player.RemoveBlueSerum(SerumDecreaseSpeed);
         if (currentLevel == GameLevel.Level2 || currentLevel == GameLevel.Level3) player.RemoveYellowSerum(SerumDecreaseSpeed);
         if (currentLevel == GameLevel.Level3) player.RemovePurpleSerum(SerumDecreaseSpeed);
+    }
+
+    public void TriggerAdrenaline()
+    {
+        StartCoroutine(AdrenalineRoutine());
+    }
+
+    private IEnumerator AdrenalineRoutine()
+    {
+        isAdrenalineActive = true;
+        adrenalineEffectUI.SetActive(true);
+        yield return new WaitForSeconds(5f);
+        isAdrenalineActive = false;
+        adrenalineEffectUI.SetActive(false);
     }
 
     private void OnGamePLaySceneLoad()
